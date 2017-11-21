@@ -3,13 +3,16 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>9485ea03-9089-40cd-8230-71b4d47bdbfc</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="microsoft.dotnet.watcher.tools" Version="2.0.0" />
+    <DotNetCliToolReference Include="microsoft.extensions.secretmanager.tools" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="microsoft.aspnetcore.all" Version="2.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
   </ItemGroup>
+  
 
 </Project>

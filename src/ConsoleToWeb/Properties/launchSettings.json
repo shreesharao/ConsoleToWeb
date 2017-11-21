@@ -18,6 +18,7 @@
     "ConsoleToWeb": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "http://localhost:5830/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

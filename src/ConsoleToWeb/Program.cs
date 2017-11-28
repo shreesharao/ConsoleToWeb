@@ -42,7 +42,7 @@ namespace ConsoleToWeb
                                 UseIISIntegration().
                                 UseStartup<StartUp>().
                                 UseSetting(WebHostDefaults.PreventHostingStartupKey, "true").  //could not see it working
-                               
+                              
                                 Build();
 
         }

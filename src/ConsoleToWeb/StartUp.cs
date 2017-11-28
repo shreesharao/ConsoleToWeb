@@ -2,12 +2,16 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System;
 using ConsoleToWeb.Middleware;
 using Microsoft.Extensions.FileProviders;
 using ConsoleToWeb.Options;
+using ConsoleToWeb.Services.Abstractions;
+using ConsoleToWeb.Services.Implementations;
+
 
 namespace ConsoleToWeb
 {
@@ -28,23 +32,23 @@ namespace ConsoleToWeb
               AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).
               //AddXmlFile().
               AddEnvironmentVariables();  //add this at the end to override other settings
-              //AddCommandLine(string[] args).  //This is not possible. Do this in program.cs
+                                          //AddCommandLine(string[] args).  //This is not possible. Do this in program.cs
 
-            if(hostingEnvironment.IsDevelopment())
+            if (hostingEnvironment.IsDevelopment())
             {
-                configurationBuilder.AddUserSecrets("9485ea03-9089-40cd-8230-71b4d47bdbfc"); //secret is comes from .csproj
+                configurationBuilder.AddUserSecrets("9485ea03-9089-40cd-8230-71b4d47bdbfc"); //secret id comes from .csproj
             }
 
-            Configuration= configurationBuilder.Build();
+            Configuration = configurationBuilder.Build();
 
             #endregion
 
-            Console.WriteLine(Configuration.GetConnectionString("DefaultConnection"));
-            Console.WriteLine(Configuration["Logging:Default"]);
-            Console.WriteLine(Configuration.GetValue<string>("Logging:Default", defaultValue: "Debug"));  //we can specify default value
-            Console.WriteLine($"UserSecrets:userName:{Configuration["UserSecrets:userName"]}");
+            Console.WriteLine($"{this}:01:{Configuration.GetConnectionString("DefaultConnection")}");
+            Console.WriteLine($"{this}:02:{Configuration["Logging:Default"]}");
+            Console.WriteLine($"{this}:03:{Configuration.GetValue<string>("Logging:Default", defaultValue: "Debug")}");  //we can specify default value
+            Console.WriteLine($"{this}:04:UserSecrets:userName:{Configuration["UserSecrets:userName"]}");
         }
-        
+
         public void ConfigureServices(IServiceCollection serviceCollection)
         {
             //options pattern
@@ -54,6 +58,22 @@ namespace ConsoleToWeb
             //adding mvc service
             serviceCollection.AddMvc();
 
+            //adding logging service
+            serviceCollection.AddLogging(logBuilder =>
+            {
+                logBuilder.
+                            AddConsole(options=>options.IncludeScopes=true).   //without adding the provider messages will not be logged.
+                            AddConfiguration(Configuration.GetSection("Logging")).   //adding the filter from configuration
+                            AddFilter<Microsoft.Extensions.Logging.Console.ConsoleLoggerProvider>(category: "Microsoft", level:LogLevel.None).  //adding the filter usng code.this overrides configuration
+                            //AddProvider().
+                            //AddEventLog(). --will not work targeeting .net core
+                            SetMinimumLevel(LogLevel.Information);
+            });
+
+            #region Custom services
+            serviceCollection.AddScoped<INotifier, ConsoleNotifier>();
+            //serviceCollection.AddSingleton(typeof(INotifier),typeof(ConsoleNotifier));
+            #endregion
         }
 
         public void Configure(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, IApplicationLifetime applicationLifetime)
@@ -74,7 +94,7 @@ namespace ConsoleToWeb
                 });
 
                 //user secrets
-                
+
             }
             #endregion
 
@@ -122,8 +142,10 @@ namespace ConsoleToWeb
             #endregion
 
 
+
+
         }
-        
+
         #endregion
 
 

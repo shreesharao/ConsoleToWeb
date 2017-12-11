@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System;
 using ConsoleToWeb.Middleware;
@@ -11,11 +12,11 @@ using Microsoft.Extensions.FileProviders;
 using ConsoleToWeb.Options;
 using ConsoleToWeb.Services.Abstractions;
 using ConsoleToWeb.Services.Implementations;
-
+using ConsoleToWeb.Models;
 
 namespace ConsoleToWeb
 {
-    public class StartUp
+    public class Startup
     {
         #region properties
         private static IConfiguration Configuration;
@@ -23,7 +24,7 @@ namespace ConsoleToWeb
 
 
         #region public methods
-        public StartUp(IHostingEnvironment hostingEnvironment)
+        public Startup(IHostingEnvironment hostingEnvironment)
         {
             #region Building Configuration
 
@@ -73,6 +74,14 @@ namespace ConsoleToWeb
             #region Custom services
             serviceCollection.AddScoped<INotifier, ConsoleNotifier>();
             //serviceCollection.AddSingleton(typeof(INotifier),typeof(ConsoleNotifier));
+            #endregion
+
+            #region Database service
+            serviceCollection.AddDbContext<EmployeeModel>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection"));
+
+            });
             #endregion
         }
 

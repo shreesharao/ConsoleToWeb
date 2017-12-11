@@ -12,11 +12,15 @@ namespace ConsoleToWeb
         static void Main(string[] args)
         {
             //StartWebHost();
-            BuildWebHostUsingWebHostBuilder().Run();
+            //BuildWebHostUsingWebHostBuilder().Run();
             //BuildWebHostUsingDefaultBuilder().Run();
             //BuildWebHostUsingConfigurationBuilder(args).Run();
 
+            var host = BuildWebHost(args);
+            host.Run();
         }
+        
+        public static IWebHost BuildWebHost(string[] args) => BuildWebHostUsingWebHostBuilder();
 
         private static void StartWebHost()
         {
@@ -40,7 +44,7 @@ namespace ConsoleToWeb
                                     
                                 }).   //overrides previous setting
                                 UseIISIntegration().
-                                UseStartup<StartUp>().
+                                UseStartup<Startup>().
                                 UseSetting(WebHostDefaults.PreventHostingStartupKey, "true").  //could not see it working
                               
                                 Build();
@@ -50,7 +54,7 @@ namespace ConsoleToWeb
         private static IWebHost BuildWebHostUsingDefaultBuilder()
         {
             return WebHost.CreateDefaultBuilder().
-                UseStartup<StartUp>().
+                UseStartup<Startup>().
                 Build();
         }
 
@@ -63,7 +67,7 @@ namespace ConsoleToWeb
                                                         Build();
 
             return WebHost.CreateDefaultBuilder().
-                                                 UseStartup<StartUp>().
+                                                 UseStartup<Startup>().
                                                  UseConfiguration(configuration).
                                                  Build();
 

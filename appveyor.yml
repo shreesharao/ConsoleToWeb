@@ -40,7 +40,7 @@ deploy:
   description: 'Edit this release description'
   provider: GitHub
   auth_token:
-    secure: gT86cHl/dV6Ovvpire8V5esUM4estoqN9tHsw6TrBUCSxZbWUvK61NJwv/tqnDIM   # Encrypted personal access token using appveyor encryption tool
+    secure: qLIGdWxIuBy1HLMu4+r4miMMP4x0l+hRr93l3tNDa/KRLCMUcEwPiRzdpw/WeMTl   # Encrypted personal access token using appveyor encryption tool
   artifact: aspnetcore-ConsoleToWeb
   draft: false
   prerelease: false

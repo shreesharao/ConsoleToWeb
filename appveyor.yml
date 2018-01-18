@@ -36,7 +36,7 @@ artifacts:
 #
 #
 deploy:
-  tag: v$(appveyor_build_version)
+  tag: $(appveyor_repo_tag_name)
   description: 'Edit this release description'
   provider: GitHub
   auth_token:
@@ -46,5 +46,4 @@ deploy:
   draft: false
   prerelease: false
   on:
-    branch: master
-    appveyor_repo_tag: true
+    appveyor_repo_tag: true  # deploy only on tag push

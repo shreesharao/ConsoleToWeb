@@ -2,7 +2,7 @@
 version: 1.0.{build}
 #
 # you can use {branch} name in version format too# version: 1.0.{build}-{branch}
-# branches to buildbranches:  # whitelist  only:    - master## Do not build on tags (GitHub and BitBucket)
+# branches to build#branches:  # whitelist # only: #   - master## Do not build on tags (GitHub and BitBucket)
 skip_tags: true
 ## Build worker image (VM template)image: Visual Studio 2017
 # scripts that are called at very beginning, before repo cloninginit:  - git config --global core.autocrlf input

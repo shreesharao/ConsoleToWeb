@@ -31,7 +31,7 @@ test: off
 #
 #
 artifacts:
-  - path: bin/Release/*/publish  #Must be relative to root
+  - path: .\bin\Release\netcoreapp2.0\publish\*.*  #Must be relative to root
     name: aspnetcore-ConsoleToWeb
 #
 #

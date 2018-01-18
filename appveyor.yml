@@ -28,4 +28,23 @@ build:#  parallel: true                  # enable MSBuild parallel builds# pro
 # to disable automatic builds#build: off
 #
 test: off
-deploy: off
+#
+#
+artifacts:
+  - path: publish
+    name: aspnetcore-ConsoleToWeb
+#
+#
+deploy:
+  tag: v$(appveyor_build_version)
+  description: 'Edit this release description'
+  provider: GitHub
+  auth token:
+  # Encrypted personal access token using appveyor encryption tool
+    secure:DKPa3UzkCW5B6O3hiWsDcz7T2+UqJV/7NKaVegArCGRZ5dypilHkQZEqxeUHBZGl
+  artifact: aspnetcore-ConsoleToWeb
+  draft: false
+  prerelease: false
+  on:
+    branch: master
+    appveyor_repo_tag: true

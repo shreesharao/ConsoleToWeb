@@ -26,6 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="microsoft.aspnetcore.app" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Net.Compilers" Version="2.8.2" />
     <!--<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.0" />-->
     <PackageReference Include="Microsoft.visualstudio.web.browserlink" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />

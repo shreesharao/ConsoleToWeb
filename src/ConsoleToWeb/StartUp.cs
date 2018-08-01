@@ -72,7 +72,11 @@ namespace ConsoleToWeb
             });
 
             #region Custom services
+            //there is no way to resolve a service to a specific implementation like in Unity container.
+            //check SO -https://stackoverflow.com/questions/39174989/how-to-register-multiple-implementations-of-the-same-interface-in-asp-net-core
+            serviceCollection.AddScoped<INotifier, EmailNotifier>();
             serviceCollection.AddScoped<INotifier, ConsoleNotifier>();
+            
             //serviceCollection.AddSingleton(typeof(INotifier),typeof(ConsoleNotifier));
             #endregion
 

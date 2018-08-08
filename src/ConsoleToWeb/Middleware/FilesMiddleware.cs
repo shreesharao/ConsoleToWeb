@@ -10,9 +10,10 @@ namespace ConsoleToWeb
         private readonly RequestDelegate _next;
         private readonly LogOption _options;
 
-        public FilesMiddleware(RequestDelegate next,IOptionsMonitor<LogOption> optionsMonitor, IOptionsSnapshot<LogOption> optionsSnapshot)
+        public FilesMiddleware(RequestDelegate next,IOptionsMonitor<LogOption> optionsMonitor, IOptionsSnapshot<LogOption> optionsSnapshot,IOptionsSnapshot<UserSecretsOptions> userSecretsOptions)
         {
             Console.WriteLine($"{nameof(FilesMiddleware)} reached");
+            Console.WriteLine($"User Secrets: Username {userSecretsOptions.Value.Username} - Password {userSecretsOptions.Value.Password}");
             _next = next;
             _options = optionsSnapshot.Value;
             optionsMonitor.OnChange(ChangeListner); //this is invoked when we save appsettings.json

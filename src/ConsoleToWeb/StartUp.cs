@@ -38,6 +38,9 @@ namespace ConsoleToWeb
             if (hostingEnvironment.IsDevelopment())
             {
                 configurationBuilder.AddUserSecrets("9485ea03-9089-40cd-8230-71b4d47bdbfc"); //secret id comes from .csproj
+                
+                //Another way
+                //configurationBuilder.AddUserSecrets<UserSecretsOptions>();
             }
 
             Configuration = configurationBuilder.Build();
